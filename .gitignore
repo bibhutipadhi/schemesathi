@@ -1,0 +1,10 @@
+node_modules/
+build/
+dist/
+netlify-drop.zip
+public/netlify-drop.zip
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
