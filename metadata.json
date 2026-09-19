@@ -1,0 +1,10 @@
+{
+  "name": "Remix SchemeSathi",
+  "description": "Your Guide to Government Schemes \u0026 Scholarships - Discover verified Indian government benefits, eligibility, official portals, and AI assistance.",
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
