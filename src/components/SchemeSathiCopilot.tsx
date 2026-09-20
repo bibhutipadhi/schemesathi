@@ -48,7 +48,17 @@ const MODES = [
 const LANGUAGE_CODES: Partial<Record<LanguageCode, string>> = {
   en: 'en-IN', hi: 'hi-IN', or: 'or-IN', bn: 'bn-IN', te: 'te-IN', ta: 'ta-IN',
   mr: 'mr-IN', gu: 'gu-IN', kn: 'kn-IN', ml: 'ml-IN', pa: 'pa-IN', as: 'as-IN',
-  ur: 'ur-IN', ne: 'ne-NP', sa: 'sa-IN',
+  ur: 'ur-IN', ne: 'ne-NP', sa: 'sa-IN', mai: 'hi-IN', kok: 'kok-IN',
+  sat: 'sat-IN', sd: 'sd-IN', doi: 'doi-IN', mni: 'mni-IN', brx: 'brx-IN', ks: 'ks-IN',
+};
+
+const WELCOME_MESSAGES: Partial<Record<LanguageCode, string>> = {
+  hi: 'नमस्ते। मैं आपका स्कीमसाथी कोपायलट हूँ। मैं सत्यापित योजनाएं खोज सकता हूं, पात्रता समझा सकता हूं, दस्तावेजों की सूची बना सकता हूं, आवेदन में मार्गदर्शन दे सकता हूं और धोखाधड़ी से सावधान कर सकता हूं।',
+  or: 'ନମସ୍କାର। ମୁଁ ଆପଣଙ୍କ ସ୍କିମସାଥୀ କୋପାଇଲଟ୍। ମୁଁ ସରକାରୀ ଯୋଜନା ଖୋଜିବା, ଯୋଗ୍ୟତା ବୁଝାଇବା, ଦସ୍ତାବିଜ ତାଲିକା ଏବଂ ଆବେଦନରେ ସାହାଯ୍ୟ କରିପାରିବି।',
+  bn: 'নমস্কার। আমি আপনার স্কিমসাথী কোপাইলট। আমি যাচাই করা সরকারি প্রকল্প খুঁজে, যোগ্যতা বুঝিয়ে, নথির তালিকা তৈরি করে এবং আবেদন করতে সাহায্য করতে পারি।',
+  te: 'నమస్కారం. నేను మీ స్కీమ్‌సాథీ కోపైలట్‌ను. ధృవీకరించిన పథకాలను కనుగొని, అర్హతను వివరించి, పత్రాల జాబితా మరియు దరఖాస్తు మార్గదర్శకాన్ని అందించగలను.',
+  ta: 'வணக்கம். நான் உங்கள் ஸ்கீம்சாதி கோபைலட். சரிபார்க்கப்பட்ட திட்டங்களைக் கண்டறிந்து, தகுதியை விளக்கி, ஆவணங்கள் மற்றும் விண்ணப்ப வழிகாட்டுதலை வழங்குவேன்.',
+  mr: 'नमस्कार. मी तुमचा स्कीमसाथी कोपायलट आहे. सत्यापित योजना शोधणे, पात्रता समजावणे, कागदपत्रांची यादी आणि अर्ज मार्गदर्शन देणे माझे काम आहे.',
 };
 
 const timeLabel = () => new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -78,7 +88,7 @@ export const SchemeSathiCopilot: React.FC<SchemeSathiCopilotProps> = ({
       setMessages([{
         id: 'copilot-welcome',
         sender: 'assistant',
-        text: 'Namaste. I am your SchemeSathi Copilot. I can find verified schemes, check eligibility, prepare documents, guide applications, detect scams, and speak answers aloud.',
+        text: WELCOME_MESSAGES[language] || 'Namaste. I am your SchemeSathi Copilot. I can find verified schemes, check eligibility, prepare documents, guide applications, detect scams, and speak answers aloud.',
         timestamp: timeLabel(),
       }]);
     }
