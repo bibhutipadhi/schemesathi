@@ -684,10 +684,6 @@ export const App: React.FC = () => {
                 setActiveTab('find-wizard');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-              onOpenAssistant={() => {
-                setAssistantInitialPrompt('');
-                setIsAssistantOpen(true);
-              }}
               totalSchemesCount={schemes.length}
               onSelectTab={(tab) => {
                 setActiveTab(tab);

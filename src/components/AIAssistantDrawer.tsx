@@ -13,6 +13,7 @@ import {
   MicOff,
   RotateCcw,
   ShieldAlert,
+  FileText,
   Languages
 } from 'lucide-react';
 import { LanguageCode } from '../types';
@@ -50,6 +51,16 @@ interface SpeechRecognitionWindow extends Window {
   SpeechRecognition?: new () => SpeechRecognitionLike;
   webkitSpeechRecognition?: new () => SpeechRecognitionLike;
 }
+
+type AssistantMode = 'discover' | 'eligibility' | 'documents' | 'application' | 'safety';
+
+const ASSISTANT_MODES: Array<{ id: AssistantMode; label: string; prompt: string; icon: React.ReactNode }> = [
+  { id: 'discover', label: 'Find schemes', prompt: 'Find the best verified government schemes for me.', icon: <Sparkles className="w-3.5 h-3.5" /> },
+  { id: 'eligibility', label: 'Check eligibility', prompt: 'Explain eligibility in simple language and tell me what may disqualify me.', icon: <ShieldAlert className="w-3.5 h-3.5" /> },
+  { id: 'documents', label: 'Prepare documents', prompt: 'Give me a complete document checklist and explain how to obtain missing documents.', icon: <FileText className="w-3.5 h-3.5" /> },
+  { id: 'application', label: 'Apply step by step', prompt: 'Guide me through the official application process step by step.', icon: <Send className="w-3.5 h-3.5" /> },
+  { id: 'safety', label: 'Check for scams', prompt: 'Check this situation for fraud and tell me how to stay safe.', icon: <AlertTriangle className="w-3.5 h-3.5" /> },
+];
 
 interface AIAssistantDrawerProps {
   isOpen: boolean;
@@ -211,6 +222,8 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
   const [speakingMessageId, setSpeakingMessageId] = useState<string | null>(null);
   const [isListening, setIsListening] = useState(false);
   const [voiceError, setVoiceError] = useState<string | null>(null);
+  const [assistantMode, setAssistantMode] = useState<AssistantMode>('discover');
+  const [autoSpeak, setAutoSpeak] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
 
@@ -344,6 +357,7 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
       };
 
       setMessages((prev) => [...prev, assistantMsg]);
+      if (autoSpeak) handleSpeakMessage(assistantMsg);
     } catch (err) {
       const fallback = generateClientSideAssistantReply(text, aiLanguage);
       setMessages((prev) => [
@@ -420,6 +434,12 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
     ]);
   };
 
+  const handleModeSelect = (mode: AssistantMode) => {
+    setAssistantMode(mode);
+    const selectedMode = ASSISTANT_MODES.find((item) => item.id === mode);
+    if (selectedMode) setInputMessage(`${selectedMode.prompt} `);
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -439,7 +459,7 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
                 </span>
               </div>
               <p className="text-[11px] text-stone-300 mt-0.5">
-                Government Schemes &amp; Scholarships Companion
+                    Advanced verified guidance, voice input, and scam protection
               </p>
             </div>
           </div>
@@ -503,6 +523,39 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
           <span className="text-[11px] leading-tight">
             Never share your OTP, UPI PIN, or bank password. Government schemes are 100% free.
           </span>
+        </div>
+
+        {/* Advanced assistant modes */}
+        <div className="px-3 py-2 border-b border-stone-200 bg-white">
+          <div className="flex items-center justify-between gap-2 mb-1.5">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-stone-500">What do you need?</span>
+            <label className="inline-flex items-center gap-1.5 text-[10px] text-stone-600 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={autoSpeak}
+                onChange={(e) => setAutoSpeak(e.target.checked)}
+                className="rounded text-amber-600 focus:ring-amber-500"
+              />
+              Auto-read answers
+            </label>
+          </div>
+          <div className="flex gap-1.5 overflow-x-auto scrollbar-none pb-0.5">
+            {ASSISTANT_MODES.map((mode) => (
+              <button
+                key={mode.id}
+                type="button"
+                onClick={() => handleModeSelect(mode.id)}
+                className={`inline-flex items-center gap-1 px-2 py-1 rounded-lg border text-[10px] font-semibold whitespace-nowrap cursor-pointer transition-colors ${
+                  assistantMode === mode.id
+                    ? 'bg-amber-100 border-amber-300 text-amber-900'
+                    : 'bg-stone-50 border-stone-200 text-stone-600 hover:bg-stone-100'
+                }`}
+              >
+                {mode.icon}
+                {mode.label}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Chat Messages Area */}

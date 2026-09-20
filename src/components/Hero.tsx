@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { 
   Search, 
-  Sparkles, 
   Compass, 
   GraduationCap, 
   Tractor, 
@@ -58,7 +57,6 @@ interface HeroProps {
   onSelectCategory: (category: SchemeCategory | 'All') => void;
   selectedCategory: SchemeCategory | 'All';
   onLaunchWizard: () => void;
-  onOpenAssistant: () => void;
   totalSchemesCount: number;
   onSelectTab?: (tab: string) => void;
 }
@@ -70,7 +68,6 @@ export const Hero: React.FC<HeroProps> = ({
   onSelectCategory,
   selectedCategory,
   onLaunchWizard,
-  onOpenAssistant,
   totalSchemesCount,
   onSelectTab,
 }) => {
@@ -195,7 +192,7 @@ export const Hero: React.FC<HeroProps> = ({
   return (
     <section className="relative overflow-hidden bg-linear-to-b from-stone-900 via-stone-900 to-stone-800 text-white pt-10 pb-16 px-4 sm:px-6 lg:px-8 border-b border-stone-800">
       {/* Subtle geometric pattern overlay */}
-      <div className="absolute inset-0 opacity-5 pointer-events-none bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px]" />
+      <div className="absolute inset-0 opacity-5 pointer-events-none bg-[radial-gradient(#ffffff_1px,transparent_1px)] bg-size-[16px_16px]" />
 
       <div className="max-w-5xl mx-auto text-center relative z-10">
         {/* Verification Pill */}
@@ -374,7 +371,7 @@ export const Hero: React.FC<HeroProps> = ({
             </div>
           )}
 
-          {/* Action CTAs: Guided Wizard & AI Assistant */}
+          {/* Action CTA: Guided Wizard */}
           <div className="mt-4 flex flex-wrap items-center justify-center gap-3 text-xs sm:text-sm">
             <button
               onClick={onLaunchWizard}
@@ -385,13 +382,6 @@ export const Hero: React.FC<HeroProps> = ({
               <span className="text-[10px] bg-amber-400/20 text-amber-200 px-1.5 py-0.5 rounded">6 Qs</span>
             </button>
 
-            <button
-              onClick={onOpenAssistant}
-              className="bg-stone-800/90 hover:bg-stone-700 text-stone-200 border border-stone-700 px-4 py-2 rounded-xl font-medium transition-colors flex items-center gap-2 cursor-pointer backdrop-blur-xs"
-            >
-              <Sparkles className="w-4 h-4 text-emerald-400" />
-              <span>Ask SchemeSathi AI</span>
-            </button>
           </div>
 
           {/* Quick Citizen Tools Gateway */}
