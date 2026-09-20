@@ -36,7 +36,7 @@ import { FindSchemesWizard } from './components/FindSchemesWizard';
 import { ScholarshipsView } from './components/ScholarshipsView';
 import { StateSchemesView } from './components/StateSchemesView';
 import { SavedSchemesView } from './components/SavedSchemesView';
-import { AIAssistantDrawer } from './components/AIAssistantDrawer';
+import { SchemeSathiCopilot } from './components/SchemeSathiCopilot';
 import { SchemeComparisonModal } from './components/SchemeComparisonModal';
 import { AdminDashboard } from './components/AdminDashboard';
 import { ReportIssueModal } from './components/ReportIssueModal';
@@ -1181,7 +1181,7 @@ export const App: React.FC = () => {
       />
 
       {/* 5. AI Assistant Drawer */}
-      <AIAssistantDrawer
+      <SchemeSathiCopilot
         isOpen={isAssistantOpen}
         onClose={() => setIsAssistantOpen(false)}
         currentLanguage={currentLanguage}
